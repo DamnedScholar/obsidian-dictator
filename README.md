@@ -15,6 +15,13 @@ This plugin is in heavy development and could change at any moment. Here's the c
 
 MIDI input is fuzzy. Some qualities of the input are hard for a user to control with precision (velocity of a key press) and can't be relied on for command activation, but there are some potential uses for being able to sense and record such things.
 
+## Roadmap
+
+- Status bar updates with recording duration. [High]
+- MIDI message receipt with configurable command triggers (this plugin's commands will be bound by default). [High]
+- Waveform visualization widget in Obsidian (toggleable, off by default). [Medium]
+- Sidebar with details about recordings in active note. [Low]
+
 ## How to use
 
 - Clone this repo.

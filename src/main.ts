@@ -1,5 +1,7 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian'
 
+import midi from 'midi'
+
 import { MIDIPicker } from 'midimap/midi-picker'
 
 // Remember to rename these classes and interfaces!
@@ -12,16 +14,23 @@ const DEFAULT_SETTINGS: DictatorSettings = {
 	mySetting: 'default'
 }
 
+const inputDevice = midi.Input()
+
 export default class Dictator extends Plugin {
 	settings: DictatorSettings
 	midi: null
+	inputDevice: null
 
 	async onload() {
 		await this.loadSettings()
 
 		console.log("Obsidian Dictator :> Conducting a coup.")
 
-		await this.acquireMIDI()
+		// await this.acquireMIDI()
+
+		
+
+		console.log(inputDevice.getPortCount())
 
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Obsidian Dictator', (evt: MouseEvent) => {
@@ -75,14 +84,20 @@ export default class Dictator extends Plugin {
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new SampleSettingTab(this.app, this));
 
+		// this.midi ?
+		// 	this.midi.onstatechange = function(e) {
+		// 		// Print information about the (dis)connected MIDI controller
+		// 		console.log(e.port.name, e.port.manufacturer, e.port.state);
+		// 	} : console.log("Obsidian Dictator :> Something is wrong with the MIDI.")
+
 		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
 		// Using this function will automatically remove the event listener when this plugin is disabled.
-		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-			console.log('click', evt);
-		});
+		// this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
+		// 	console.log('click', evt);
+		// });
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
-		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
+		// this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 	}
 
 	onunload() {
@@ -97,21 +112,21 @@ export default class Dictator extends Plugin {
 		await this.saveData(this.settings);
 	}
 
-	async acquireMIDI() {
-		function onMIDISuccess( midiAccess ) {
-			console.log( "Obsidian Dictator :> MIDI ready!" )
+	// async acquireMIDI() {
+	// 	function onMIDISuccess( midiAccess ) {
+	// 		console.log( "Obsidian Dictator :> MIDI ready!" )
 			
-			return midiAccess  // store in the global (in real usage, would probably keep in an object instance)
-		}
+	// 		return midiAccess  // store in the global (in real usage, would probably keep in an object instance)
+	// 	}
 	
-		function onMIDIFailure(msg) {
-			console.log( "Obsidian Dictator :> Failed to get MIDI access - " + msg )
+	// 	function onMIDIFailure(msg) {
+	// 		console.log( "Obsidian Dictator :> Failed to get MIDI access - " + msg )
 
-			return null
-		}
+	// 		return null
+	// 	}
 	
-		this.midi = navigator.requestMIDIAccess().then( onMIDISuccess, onMIDIFailure )
-	}
+	// 	this.midi = navigator.requestMIDIAccess().then( onMIDISuccess, onMIDIFailure )
+	// }
 }
 
 class SampleModal extends Modal {
