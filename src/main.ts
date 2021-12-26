@@ -28,8 +28,6 @@ export default class Dictator extends Plugin {
 
 		// await this.acquireMIDI()
 
-		
-
 		console.log(inputDevice.getPortCount())
 
 		// This creates an icon in the left ribbon.
