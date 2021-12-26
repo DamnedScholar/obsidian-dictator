@@ -19,7 +19,6 @@ const inputDevice = midi.Input()
 export default class Dictator extends Plugin {
 	settings: DictatorSettings
 	midi: null
-	inputDevice: null
 
 	async onload() {
 		await this.loadSettings()
@@ -27,8 +26,6 @@ export default class Dictator extends Plugin {
 		console.log("Obsidian Dictator :> Conducting a coup.")
 
 		// await this.acquireMIDI()
-
-		console.log(inputDevice.getPortCount())
 
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Obsidian Dictator', (evt: MouseEvent) => {
@@ -100,6 +97,10 @@ export default class Dictator extends Plugin {
 
 	onunload() {
 
+	}
+
+	thisIsNeverCalled() {
+		console.log(inputDevice.getPortCount())
 	}
 
 	async loadSettings() {
